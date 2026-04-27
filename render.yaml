@@ -15,8 +15,10 @@ services:
         fromDatabase:
           name: ink-echo-db
           property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.12.0
       - key: DJANGO_ALLOWED_HOSTS
-        value: ink-echo-blog.onrender.com,localhost,127.0.0.1
+        value: blog-project-django-zh3z.onrender.com,localhost,127.0.0.1
 
 databases:
   - name: ink-echo-db
