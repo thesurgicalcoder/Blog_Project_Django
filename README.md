@@ -58,7 +58,7 @@ Designed and Developed by **Mradul Khandewal**.
    ```
 
 6. **Access the application**:
-   Open your browser and navigate to `http://127.0.0.1:8000/`.
+   Open your browser and navigate to `https://blog-project-django-zh3z.onrender.com`.
 
 ## 📜 License
 
