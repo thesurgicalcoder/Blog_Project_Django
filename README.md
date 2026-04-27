@@ -62,7 +62,6 @@ Designed and Developed by **Mradul Khandewal**.
 
 ## 📜 License
 
-This project is open-source and available under the MIT License.
 
 ---
 Designed with ❤️ by **Mradul Khandewal**
