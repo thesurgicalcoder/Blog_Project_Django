@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Ink & Echo{% endblock %}
+
+{% block extra_css %}
+    .hero {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 60px;
+        align-items: center;
+        padding: 60px 0 100px;
+    }
+
+    .hero-title {
+        font-size: clamp(40px, 6vw, 64px);
+        line-height: 1.1;
+        margin-bottom: 24px;
+        color: var(--text-main);
+    }
+
+    .hero-subtitle {
+        font-size: 18px;
+        color: var(--text-muted);
+        margin-bottom: 40px;
+        max-width: 500px;
+    }
+
+    .hero-image-card {
+        background: white;
+        padding: 40px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        position: relative;
+    }
+
+    .hero-image-card::before {
+        content: "";
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        width: 100px;
+        height: 100px;
+        background: var(--brand-accent);
+        opacity: 0.1;
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 40px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: 32px;
+    }
+
+    /* Post Card Enhancements */
+    .post-card {
+        background: #fff;
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        border: 1px solid var(--border-color);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .post-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--brand-primary);
+    }
+
+    .post-media {
+        width: 100%;
+        aspect-ratio: 16/10;
+        background: #f0ede9;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+    }
+
+    .post-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .post-tag {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        color: var(--brand-primary);
+        margin-bottom: 4px;
+    }
+
+    .post-title-link h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    .post-excerpt {
+        font-size: 14px;
+        color: var(--text-muted);
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .post-footer {
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid #f2f2f2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+
+    .auth-name {
+        font-weight: 600;
+        color: var(--text-main);
+    }
+
+    @media (max-width: 992px) {
+        .hero {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: 40px;
+        }
+        .hero-subtitle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <div class="hero-text">
+            <h1 class="hero-title">Words that echo, ideas that inspire.</h1>
+            <p class="hero-subtitle">
+                Welcome to Ink & Echo. A curated space for thoughtful stories, 
+                personal reflections, and the quiet breakthroughs of everyday life.
+            </p>
+            <div style="display: flex; gap: 16px; justify-content: inherit;">
+                <a href="#latest" class="btn btn-primary">Start Reading</a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'signup' %}" class="btn btn-outline">Join the Community</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="hero-image-card">
+            <h3 style="margin-bottom: 12px; font-size: 22px;">The Sunday Edition</h3>
+            <p style="color: var(--text-muted); font-size: 15px;">
+                "The most powerful words are often the ones whispered in the silence of our own growth."
+            </p>
+            <div style="margin-top: 24px; display: flex; align-items: center; gap: 12px;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--brand-accent);"></div>
+                <div>
+                    <div style="font-weight: 600; font-size: 14px;">Editor's Pick</div>
+                    <div style="font-size: 12px; color: var(--text-muted);">Updated 2 hours ago</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-header" id="latest">
+        <h2 class="section-title">Latest Echoes</h2>
+        <a href="#" style="font-size: 14px; font-weight: 600; color: var(--brand-primary);">View all &rarr;</a>
+    </div>
+
+    {% if posts %}
+        <div class="grid">
+            {% for post in posts %}
+                <article class="post-card">
+                    <div class="post-media">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                        {% else %}
+                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #ccc;">
+                                <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/></svg>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="post-tag">Thought Piece</div>
+                    <a href="{% url 'post_detail' post.id %}" class="post-title-link">
+                        <h3>{{ post.title }}</h3>
+                    </a>
+                    <p class="post-excerpt">{{ post.content }}</p>
+                    <div class="post-footer">
+                        <span class="auth-name">@{{ post.author.username }}</span>
+                        <span>{{ post.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 100px 0; background: #fff; border-radius: var(--radius-lg); border: 1px dashed var(--border-color);">
+            <h3 style="margin-bottom: 12px; color: var(--text-muted);">The pages are quiet...</h3>
+            <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 24px;">Be the first to share your voice with the world.</p>
+            <a href="{% url 'create_post' %}" class="btn btn-primary">Create the first post</a>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | Ink & Echo{% endblock %}
+
+{% block extra_css %}
+    .post-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 60px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+    }
+
+    .post-header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    .post-category {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--brand-primary);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .post-full-title {
+        font-size: clamp(32px, 5vw, 48px);
+        line-height: 1.2;
+        margin-bottom: 24px;
+        color: var(--text-main);
+    }
+
+    .post-full-meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        font-size: 14px;
+        color: var(--text-muted);
+    }
+
+    .author-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--brand-accent);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: 12px;
+    }
+
+    .post-hero-image {
+        width: 100%;
+        border-radius: var(--radius-md);
+        margin-bottom: 48px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .post-hero-image img {
+        width: 100%;
+        display: block;
+    }
+
+    .post-body {
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    .post-body p {
+        margin-bottom: 1.5em;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 60px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--brand-primary);
+    }
+
+    @media (max-width: 768px) {
+        .post-container {
+            padding: 30px 20px;
+        }
+    }
+{% endblock %}
+
+{% block content %}
+    <article class="post-container">
+        <header class="post-header">
+            <span class="post-category">Reflections</span>
+            <h1 class="post-full-title">{{ post.title }}</h1>
+            <div class="post-full-meta">
+                <span class="author-avatar">{{ post.author.username|slice:":1"|upper }}</span>
+                <span>By <b>{{ post.author.username }}</b></span>
+                <span>&bull;</span>
+                <span>{{ post.created_at|date:"F d, Y" }}</span>
+            </div>
+        </header>
+
+        {% if post.image %}
+            <div class="post-hero-image">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+            </div>
+        {% endif %}
+
+        <div class="post-body">
+            {{ post.content|linebreaks }}
+        </div>
+
+        <a href="{% url 'home' %}" class="back-link">
+            &larr; Back to the Echoes
+        </a>
+    </article>
+{% endblock %}
