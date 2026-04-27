@@ -65,4 +65,4 @@ Designed and Developed by **Mradul Khandewal**.
 This project is open-source and available under the MIT License.
 
 ---
-Designed with ❤️ by **Mraddul Khandewal**
+Designed with ❤️ by **Mradul Khandewal**
